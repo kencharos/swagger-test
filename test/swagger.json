@@ -1,73 +1,8 @@
-{
-  "swagger": "2.0",
-  "host": "localhost",
-  "schemes": ["http"],
-  "info": {
-    "version": "1.0.0",
-    "title": "Pet store"
-  },
-  "basePath": "/v1",
-  "paths": {
-    "/pets": {
-      "get": {
-        "produces": [ "application/json" ],
-        "responses": {
-          "200": {
-            "description": "Returns all the pets"
-          }
-        }
-      }
-    },
-    "/pets/{id}": {
-      "get": {
-        "produces": [ "application/json" ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The pet id",
-            "type": "string",
-            "required": true,
-            "default": "fido3"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns a single pet"
-          }
-        },
-        "x-amples": [
-          {
-            "description": "get /pets/{id}: returns 200 for fido4",
-            "request": {
-              "params": {
-                "id": "fido4"
-              }
-            },
-            "responses": {
-              "200": {
-                "headers": {
-                  "content-type": "application/json"
-                }
-              }
-            }
-          },
-          {
-            "request": {
-              "params": {
-                "id": "fido7"
-              }
-            },
-            "responses": {
-              "200": {
-                "headers": {
-                  "content-type": "application/json"
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  }
-}
+{"swagger":"2.0","info":{"version":"v1","title":"Motoyama API"},"basePath":"/",
+"paths":{
+  "/api/People":{"get":{"tags":["People"],"operationId":"ApiPeopleGet","consumes":[],
+  "produces":["text/plain","application/json","text/json"],
+  "responses":{"200":{"description":"Success",
+    "schema":{"type":"array","items":{"$ref":"#/definitions/Person"}}}}},
+  "post":{"tags":["People"],"operationId":"ApiPeoplePost","consumes":["application/json","text/json","application/json-patch+json"],"produces":["text/plain","application/json","text/json"],"parameters":[{"name":"person","in":"body","required":false,"schema":{"$ref":"#/definitions/Person"}}],"responses":{"200":{"description":"Success","schema":{"format":"int32","type":"integer"}}}}},
+  "/api/People/{id}":{"get":{"tags":["People"],"operationId":"ApiPeopleByIdGet","consumes":[],"produces":["text/plain","application/json","text/json"],"parameters":[{"name":"id","in":"path","required":true,"type":"integer","format":"int32"}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/Person"}}}},"put":{"tags":["People"],"operationId":"ApiPeopleByIdPut","consumes":["application/json","text/json","application/json-patch+json"],"produces":["text/plain","application/json","text/json"],"parameters":[{"name":"id","in":"path","required":true,"type":"integer","format":"int32"},{"name":"person","in":"body","required":false,"schema":{"$ref":"#/definitions/Person"}}],"responses":{"200":{"description":"Success","schema":{"format":"int32","type":"integer"}}}},"delete":{"tags":["People"],"operationId":"ApiPeopleByIdDelete","consumes":[],"produces":[],"parameters":[{"name":"id","in":"path","required":true,"type":"integer","format":"int32"}],"responses":{"200":{"description":"Success"}}}},"/api/Values":{"get":{"tags":["Values"],"operationId":"ApiValuesGet","consumes":[],"produces":["text/plain","application/json","text/json"],"responses":{"200":{"description":"Success","schema":{"type":"array","items":{"type":"string"}}}}},"post":{"tags":["Values"],"operationId":"ApiValuesPost","consumes":["application/json","text/json","application/json-patch+json"],"produces":[],"parameters":[{"name":"value","in":"body","required":false,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success"}}}},"/api/Values/{id}":{"get":{"tags":["Values"],"operationId":"ApiValuesByIdGet","consumes":[],"produces":["text/plain","application/json","text/json"],"parameters":[{"name":"id","in":"path","required":true,"type":"integer","format":"int32"}],"responses":{"200":{"description":"Success","schema":{"type":"string"}}}},"put":{"tags":["Values"],"operationId":"ApiValuesByIdPut","consumes":["application/json","text/json","application/json-patch+json"],"produces":[],"parameters":[{"name":"id","in":"path","required":true,"type":"integer","format":"int32"},{"name":"value","in":"body","required":false,"schema":{"type":"string"}}],"responses":{"200":{"description":"Success"}}},"delete":{"tags":["Values"],"operationId":"ApiValuesByIdDelete","consumes":[],"produces":[],"parameters":[{"name":"id","in":"path","required":true,"type":"integer","format":"int32"}],"responses":{"200":{"description":"Success"}}}}},"definitions":{"Person":{"type":"object","properties":{"id":{"format":"int32","type":"integer"},"name":{"type":"string"},"age":{"format":"int32","type":"integer"},"prefectureId":{"format":"int32","type":"integer"}}}},"securityDefinitions":{}}

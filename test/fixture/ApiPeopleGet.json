@@ -1,0 +1,27 @@
+[
+    {
+      "description":"ApiPeopleGet case1",
+      "request": {
+        "params": {
+        }
+      },
+      "responses": {
+        "200": {
+            "headers":{"transfer-encoding": "chunked"},
+            "body":[{"id":1, "name":"updateed", "age":0, "prefectureId":0}]
+        }
+      }
+    },
+    {
+        "description":"ApiPeopleGet case2",
+        "request": {
+          "params": {
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Returns all the pets"
+          }
+        }
+      }
+]

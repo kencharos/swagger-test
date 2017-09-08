@@ -8,10 +8,51 @@ var jsonDiff    = require('json-diff');
 
 var source = [];
 
+var conf = require(process.argv[2]);
+
+console.log("load config")
+console.info(conf)
+
 var rl = readline.createInterface({
   terminal: false,
   input: process.stdin,
 });
+
+var excludeProperty = function(act, exp) {
+  if (exp == null) {
+    return;
+  }
+  if (!(exp instanceof Object)) {
+    return;
+  }
+
+  var actIsArray = Array.isArray(act);
+  var expIsArray = Array.isArray(exp);
+
+  if(actIsArray && expIsArray) {
+    if (act.length == exp.length) {
+      for(var i in act) {
+        excludeProperty(act[i], exp[i]);
+      }
+    }
+  } else if (!actIsArray && !expIsArray) {
+
+    var actKeys = Object.keys(act);
+    var expKeys = Object.keys(exp);
+  
+    for(var i in actKeys) {
+      var key = actKeys[i];
+      if(!( key in exp)) {
+        delete act[key]
+      }
+    }
+    actKeys = Object.keys(act);
+    for(var i in actKeys) {
+      var key = actKeys[i];
+      excludeProperty(act[key], exp[key])
+    }  
+  }
+}
 
 rl.on('line', function (line) {
   source.push(line);
@@ -22,7 +63,7 @@ rl.on('close', function () {
   var failed = [];
   var requests = [];
   var swaggerSpec = JSON.parse(source.join('\n'));
-  var xamples = swaggerTest.parse(swaggerSpec);
+  var xamples = swaggerTest.parse(swaggerSpec, conf);
   xamples.forEach(function (xample) {
     requests.push(
       preq[xample.request.method](xample.request).then(function (response) {
@@ -38,6 +79,10 @@ rl.on('close', function () {
               }
             }
           }
+          // actにのみ存在するプロパティを除外する。
+          if (response.body && xampleResponse.body) {
+            excludeProperty(response.body, xampleResponse.body)
+          }
           try {
             assert.deepEqual(response, xampleResponse);
             passed.push({
@@ -50,6 +95,12 @@ rl.on('close', function () {
               actual: e.actual,
             });
           }
+        } else { // No hit status
+          failed.push({
+            description: "unexpected statusCode:" + xample.description,
+            expected: Object.keys(xample.responses)[0],
+            actual: response.status,
+          });
         }
       })
     );

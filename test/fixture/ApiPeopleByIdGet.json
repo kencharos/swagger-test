@@ -1,0 +1,16 @@
+[
+    {
+     "description":"ApiPeopleByIdGet case1",
+      "request": {
+        "params": {
+            "id":"1"
+        }
+      },
+      "responses": {
+        "200": {
+            "headers":{},
+            "body":{"id":1, "name":"updateed", "age":0}
+        }
+      }
+    }
+]

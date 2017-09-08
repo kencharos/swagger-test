@@ -2,6 +2,25 @@
 
 [![Build Status](https://travis-ci.org/earldouglas/swagger-test.svg?branch=master)](https://travis-ci.org/earldouglas/swagger-test) [![Coverage Status](https://coveralls.io/repos/github/earldouglas/swagger-test/badge.svg?branch=master)](https://coveralls.io/github/earldouglas/swagger-test?branch=master)
 
+## 改修
+
+以下の改修を追加
+
++ 期待に存在するプロパティのみを検証対象とする
++ configファイルを引数に渡せるように
+    + configに記載可能な内容は test/conf.json 参照
+    + 既存の swagger.jsonの修正をなるべく不要に
++ x-sample の内容を外部ファイルから取得
+    + conf.json の fixturePathで指定したフォルダに、各オペレーションID.json で放り込んでおく
+    + fixturePathは、"./" と相対パスを指定した場合は、このReadMeがあるフォルダを起点とする。
+    + 仕組み上、swagger.json にはユニークな operationId の設定が必要
+
+npmモジュール化は特にしていないので、このプロジェクトをクローン後、fixuter, swagger.json, conf.jsonを整備して、
+次のように実行する。
+
+`cat test/swagger.json | node swagger-test.js ./test/conf.json`
+
+
 ## Quick start
 
 To run swagger-test without writing any JavaScript, install the CLI:

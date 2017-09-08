@@ -1,0 +1,7 @@
+{
+    "host": "localhost:58179",
+    "schemes": ["http"],
+    "basePath":"/",
+    
+    "fixturePath":"./test/fixture/"
+}
